@@ -1,0 +1,27 @@
+*{
+    list-style: none;
+}
+
+.imgCover{
+    object-fit: cover;
+}
+
+.ofHidden{
+    overflow: auto;
+}
+
+.cardD{
+    height: 8rem;
+}
+
+@media (max-width: 992px) {
+    .cardD{
+        height: 18rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .cardD{
+        height: 10rem;
+    }
+}
