@@ -58,6 +58,7 @@ cervezas.forEach((element,i) => {
               <div class="d-flex justify-content-between align-items-center">
                 <small class="text-muted">Alc.: ${element.alcohol}</small>
                 <small class="text-muted">IBU: ${element.ibu}</small>
+                <span>$${element.precio}</span>
                 <div class="btn-group">
                   <input type="text" class="form-control" placeholder="Cant." size="1px" id="inputCant${i}">
                   <button type="button" class="btn btn-sm btn-outline-secondary" id="btnAgregar${i}">Agregar</button>
