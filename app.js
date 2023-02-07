@@ -139,7 +139,7 @@ mostrarCarrito.addEventListener("click",() =>{
   carrito.forEach(element => {
     const li = document.createElement("li")
     let subtotal = 0
-    subtotal = element.precio*element.cant
+    subtotal = element.precioUn*element.cant
     li.innerHTML = `${element.cant} x ${element.nombre} $${subtotal}`
     listaCarrito.appendChild(li)
   });
