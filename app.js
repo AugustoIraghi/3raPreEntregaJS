@@ -1,4 +1,16 @@
-// 17.51
+function finder(nombre){
+  let index = carrito.findIndex(object => {
+    return object.nombre === nombre;
+  });
+  return index
+}
+
+function displayNone() {
+  // document.getElementById("alertAgregado").style.class = "animate__fadeOutDown"
+  document.getElementById("alertAgregado").style.display = "none"
+}
+
+
 class Beer{
   constructor(nombre, precio, alcohol, ibu, descripcion){
       this.nombre = nombre
@@ -37,7 +49,7 @@ cervezas.forEach((element,i) => {
     const li = document.createElement("li")
     li.innerHTML = `
       
-        <div class="col">
+        <ul class="col">
           <div class="card shadow-sm">
             <img src="./img/cerveza${i}.jpg" alt="" class="bd-placeholder-img card-img-top imgCover" width="100%" height="225">
             <div class="card-body">
@@ -59,7 +71,14 @@ cervezas.forEach((element,i) => {
  
 });
 
+
 let carrito = []
+const carritoLS = JSON.parse(localStorage.getItem("carrito"))
+
+if(carritoLS){
+    carrito = carritoLS
+}
+let finded
 
 cervezas.forEach((element,i) => {
     const inputCant = document.getElementById(`inputCant${i}`)
@@ -68,15 +87,80 @@ cervezas.forEach((element,i) => {
     btnAgregar.addEventListener("click", () => {
     
       const cantidad = inputCant.value
+      
       if(cantidad==="") return
-      for (let index = 0; index < cantidad; index++) {
-        carrito.push(cervezas[i].nombre)        
+
+      finded = finder(element.nombre)
+
+      if(finded==-1){
+          carrito.push({nombre:element.nombre, cant: cantidad, precioUn:element.precio})        
+      }else{
+        for (let index = 0; index < cantidad; index++) {
+          carrito[finded].cant++}
       }
+
+
+      const carritoJSON = JSON.stringify(carrito)
+      localStorage.setItem("carrito", carritoJSON)
+
+
+      
+      const alertText = document.getElementById("alertAgregado")
+      alertText.innerHTML = `Agregaste ${cantidad} ${element.nombre} al carrito.`
+      // document.getElementById("alertAgregado").style.class = "animate__fadeInRightBig"
+      document.getElementById("alertAgregado").style.display = "block"
+      
+      setTimeout(displayNone, 8000)
+      
+      
+
+
+   
+
 
       inputCant.value = ""
       console.log(carrito)
     })
 });
+
+
+const containerCarrito = document.getElementById("containerCarrito")
+
+const mostrarCarrito = document.getElementById("mostrarCarrito")
+
+mostrarCarrito.addEventListener("click",() =>{
+
+  document.getElementById("panelCarrito").className = "animate__fadeInRightBig"
+  document.getElementById("panelCarrito").style.left = "34%"
+
+  const listaCarrito = document.createElement("ul")
+  containerCarrito.appendChild(listaCarrito)
+  
+  carrito.forEach(element => {
+    const li = document.createElement("li")
+    let subtotal = 0
+    subtotal = element.precio*element.cant
+    li.innerHTML = `${element.cant} x ${element.nombre} $${subtotal}`
+    listaCarrito.appendChild(li)
+  });
+
+  const totalCarrito = document.createElement("div")
+  containerCarrito.appendChild(totalCarrito)
+  let total = 0
+  carrito.forEach(element => {
+    total+=element.precioUn*element.cant
+  });
+  totalCarrito.innerHTML = "Total: $"+total
+
+
+  const cerrarCarrito = document.getElementById("close")
+  cerrarCarrito.addEventListener("click",() =>{
+    document.getElementById("panelCarrito").style.left = "100%"
+    document.getElementById("panelCarrito").className = ""
+    listaCarrito.remove()
+    totalCarrito.remove()
+  })
+})
 
 
 
