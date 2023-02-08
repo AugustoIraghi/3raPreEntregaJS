@@ -10,6 +10,10 @@ function displayNone() {
   document.getElementById("alertAgregado").style.display = "none"
 }
 
+function funcVaciarCarrito(){
+  carrito = []
+  localStorage.clear()
+}
 
 class Beer{
   constructor(nombre, precio, alcohol, ibu, descripcion){
@@ -111,7 +115,7 @@ cervezas.forEach((element,i) => {
       // document.getElementById("alertAgregado").style.class = "animate__fadeInRightBig"
       document.getElementById("alertAgregado").style.display = "block"
       
-      setTimeout(displayNone, 8000)
+      setTimeout(displayNone, 4000)
       
       
 
@@ -120,7 +124,7 @@ cervezas.forEach((element,i) => {
 
 
       inputCant.value = ""
-      console.log(carrito)
+      // console.log(carrito)
     })
 });
 
@@ -157,11 +161,16 @@ mostrarCarrito.addEventListener("click",() =>{
   const cerrarCarrito = document.getElementById("close")
   cerrarCarrito.addEventListener("click",() =>{
     document.getElementById("panelCarrito").style.left = "100%"
-    document.getElementById("panelCarrito").className = ""
+    // document.getElementById("panelCarrito").className = ""
     listaCarrito.remove()
     totalCarrito.remove()
   })
+  const vaciarCarrito = document.getElementById("vaciarCarrito")  
+
+  vaciarCarrito.addEventListener("click",() =>{
+  listaCarrito.remove()
+  total = 0
+  totalCarrito.innerHTML = "Total: $"+total
+  funcVaciarCarrito()
 })
-
-
-
+})
