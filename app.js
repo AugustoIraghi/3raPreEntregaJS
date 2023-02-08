@@ -10,10 +10,30 @@ function displayNone() {
   document.getElementById("alertAgregado").style.display = "none"
 }
 
+function funcCalcularTotalScript(){
+  const totalCarrito = document.createElement("div")
+  containerCarrito.appendChild(totalCarrito)
+  let t = 0
+  carrito.forEach(element => {
+    t+=element.precioUn*element.cant
+  });
+  
+  totalCarrito.innerHTML = "Total: $"+t
+  return totalCarrito
+}
+
 function funcVaciarCarrito(){
   carrito = []
   localStorage.clear()
 }
+
+// function funcAgregarScriptCarrito{
+
+// }
+
+// function funcEliminarItempScriptCarrito() {
+  
+// }
 
 class Beer{
   constructor(nombre, precio, alcohol, ibu, descripcion){
@@ -149,13 +169,9 @@ mostrarCarrito.addEventListener("click",() =>{
     listaCarrito.appendChild(li)
   });
 
-  const totalCarrito = document.createElement("div")
-  containerCarrito.appendChild(totalCarrito)
-  let total = 0
-  carrito.forEach(element => {
-    total+=element.precioUn*element.cant
-  });
-  totalCarrito.innerHTML = "Total: $"+total
+
+  totalCarrito = funcCalcularTotalScript()
+  
 
 
   const cerrarCarrito = document.getElementById("close")
@@ -169,8 +185,8 @@ mostrarCarrito.addEventListener("click",() =>{
 
   vaciarCarrito.addEventListener("click",() =>{
   listaCarrito.remove()
-  total = 0
-  totalCarrito.innerHTML = "Total: $"+total
+  totalCarrito.remove()
+  totalCarrito = funcCalcularTotalScript()
   funcVaciarCarrito()
 })
 })
